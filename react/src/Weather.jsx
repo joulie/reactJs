@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY; // Clé OpenWeatherMap depuis .env
 
@@ -73,6 +73,7 @@ export default function Weather() {
             <img
               src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
               alt={item.weather[0].description}
+              style={{ width: 60, height: 60 }}
             />
             <div>{item.weather[0].description}</div>
             <div>Temp : {Math.round(item.main.temp)}°C</div>
