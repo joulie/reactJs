@@ -1,35 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+
+import React, { useEffect, useState } from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/api/data')
+      .then((res) => res.json())
+      .then((data) => {
+        // Si data est un tableau, on l'utilise directement
+        if (Array.isArray(data)) {
+          setRows(data);
+        } else if (Array.isArray(data.rows)) {
+          setRows(data.rows);
+        } else {
+          setRows([]);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError('Erreur lors du chargement des données');
+        setLoading(false);
+      });
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="main-container">
+    <h1 className="main-title">Available Properties</h1>
+    <p className="description">Find below the list of available properties with their address, country, and asking price.</p>
+      {loading ? (
+        <p>Chargement...</p>
+      ) : error ? (
+        <p style={{ color: 'red' }}>{error}</p>
+      ) : (
+        <table className="styled-table">
+          <thead>
+            <tr>
+              <th>Address</th>
+              <th>Country</th>
+              <th>Asking price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, idx) => (
+              <tr key={idx}>
+                <td>{row.address}</td>
+                <td>{row.country}</td>
+                <td>{row.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
