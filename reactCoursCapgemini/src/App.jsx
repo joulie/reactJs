@@ -46,17 +46,23 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, idx) => (
-              <tr key={idx}>
-                <td>{row.address}</td>
-                <td>{row.country}</td>
-                <td>{row.price}</td>
-              </tr>
+            {rows.map((h, idx) => (
+              <HouseRow key={idx} house={h} />
             ))}
           </tbody>
         </table>
       )}
     </div>
+  );
+}
+
+function HouseRow({ house }) {
+  return (
+    <tr>
+      <td>{house.address}</td>
+      <td>{house.country}</td>
+      <td>{house.price}</td>
+    </tr>
   );
 }
 

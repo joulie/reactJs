@@ -1,5 +1,5 @@
 [
-  { "address": "123 Main St", "country": "France", "price": "€350,000" },
-  { "address": "456 Elm St", "country": "Germany", "price": "€420,000" },
-  { "address": "789 Oak St", "country": "Spain", "price": "€390,000" }
+  { "id": 1, "address": "123 Main St", "country": "France", "price": "€350,000" },
+  { "id": 2, "address": "456 Elm St", "country": "Germany", "price": "€420,000" },
+  { "id": 3, "address": "789 Oak St", "country": "Spain", "price": "€390,000" }
 ]
