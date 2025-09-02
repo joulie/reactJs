@@ -31,15 +31,27 @@ function App() {
 //  const [counter, setCounter] = useState(0);
 //  setCounter(current => current + 1);
 
-  const addHouse = () => {
-    setRows([
-      ...rows,
-      {
-        address: 'New House',
-        country: 'France',
-        price: 200,
-      },
-    ]);
+  const addHouse = async () => {
+    const newHouse = {
+      address: 'New House',
+      country: 'France',
+      price: 200,
+    };
+    try {
+      await fetch('http://localhost:3001/api/data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newHouse),
+      });
+      // Recharge la liste depuis le backend
+      const res = await fetch('http://localhost:3001/api/data');
+      const data = await res.json();
+      setRows(Array.isArray(data) ? data : data.rows || []);
+    } catch (err) {
+      setError('Erreur lors de l’ajout de la maison');
+    }
   }
 
   return (
