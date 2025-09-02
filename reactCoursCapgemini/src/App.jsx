@@ -28,6 +28,20 @@ function App() {
       });
   }, []);
 
+//  const [counter, setCounter] = useState(0);
+//  setCounter(current => current + 1);
+
+  const addHouse = () => {
+    setRows([
+      ...rows,
+      {
+        address: 'New House',
+        country: 'France',
+        price: 200,
+      },
+    ]);
+  }
+
   return (
     <div className="main-container">
     <h1 className="main-title">Available Properties</h1>
@@ -37,20 +51,25 @@ function App() {
       ) : error ? (
         <p style={{ color: 'red' }}>{error}</p>
       ) : (
-        <table className="styled-table">
-          <thead>
-            <tr>
-              <th>Address</th>
-              <th>Country</th>
-              <th>Asking price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((h, idx) => (
-              <HouseRow key={idx} house={h} />
-            ))}
-          </tbody>
-        </table>
+        <>
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>Address</th>
+                <th>Country</th>
+                <th>Asking price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((h, idx) => (
+                <HouseRow key={idx} house={h} />
+              ))}
+            </tbody>
+          </table>
+          <button className="btn btn-primary" onClick={addHouse}>
+            Add House
+          </button>
+        </>
       )}
     </div>
   );
